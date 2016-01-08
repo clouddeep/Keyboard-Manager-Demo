@@ -35,6 +35,11 @@
     [self.textField resignFirstResponder];
 }
 
+/**
+ You can get these code from Appl doc:
+ **Managing the Keyboard**
+*/
+
 - (void)registerForKeyboardNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -46,6 +51,12 @@
                                                  name:UIKeyboardWillHideNotification object:nil];
     
 }
+
+/**
+ This method should be called for registering UIKeyboardDidShowNotification. If you register UIKeyboardWillShowNotification with this method, it will not work.
+ Because scrollRectToVisible: will check the rect is hiden by something else, no view hide text field when posting UIKeyboardWillShowNotification.
+ And this is why it looks like delaying for a while.
+ */
 
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void)keyboardWasShown:(NSNotification*)aNotification

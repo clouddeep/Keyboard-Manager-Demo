@@ -16,12 +16,6 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-}
-
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
@@ -33,15 +27,6 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyboardNotification:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyboardNotification:) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyboardWhenDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-}
-
-
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -50,37 +35,15 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
-}
-
-- (void)recordViewState
-{
-    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-    
-    BOOL isFirstResponder = self.textField.isFirstResponder;
-    [userDefault setObject:@(isFirstResponder)
-                    forKey:@"TextFieldState"];
-}
-
-- (void)restoreViewState
-{
-    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-    
-    BOOL isFirstResponder = NO;
-    NSNumber *v = [userDefault objectForKey:@"TextFieldState"];
-    isFirstResponder = v.boolValue;
-    
-    if (isFirstResponder) {
-        [self.textField becomeFirstResponder];
-    }
 }
 
 - (void)handleKeyboardNotification:(NSNotification *)notification
 {
-    UIApplication *app = [UIApplication sharedApplication];
-    if (app.applicationState != UIApplicationStateActive) {
-        return;
-    }
+    /* Check app state */
+//    UIApplication *app = [UIApplication sharedApplication];
+//    if (app.applicationState != UIApplicationStateActive) {
+//        return;
+//    }
     
     if (notification.name == UIKeyboardWillShowNotification) {
         [self viewMoveUp:YES withInfo:[notification userInfo]];
@@ -108,9 +71,15 @@
 {
     UIViewAnimationCurve curve = [userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue];
     double timeInterval = [userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    /* Start: Reset the self.view frame */
+    
+    /* If this method is excuted unexpectedly, it can prevent from the view will be shifted too much. */
+    /* You can out another UIView in self.view to embed text field for shifting to avoid the black rect while app become active again. */
     CGRect frame = self.view.frame;
     frame.origin.y = 0;
     self.view.frame = frame;
+    /* End */
     
     CGRect keyRect = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGPoint textFieldOrigin = CGPointZero;
@@ -118,13 +87,14 @@
     UITextField *textField = self.textField;
     textFieldOrigin = textField.frame.origin;
     
+    /* WARNING: if your text field is embedded in different subview, you might get wrong textFieldOrigin and yOffset would be wrong. */
+    /* You might need to convert coordinate of the origin of textField in case. */
     CGFloat yOffset = textFieldOrigin.y - keyRect.origin.y;
-    BOOL isCovered = yOffset>0;
+    BOOL isCovered = CGRectContainsPoint(keyRect, textFieldOrigin);
     
     if (isMoveUp) {
-        CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
         CGFloat textFieldHeight = textField.frame.size.height;
-        frame.origin.y -= (isCovered) ? (yOffset-statusBarHeight+ textFieldHeight+30) : 0;
+        frame.origin.y -= (isCovered) ? (yOffset+ textFieldHeight) : 0;
     }else {
         frame.origin.y = 0;
     }
@@ -132,20 +102,6 @@
     [UIView animateWithDuration:timeInterval delay:0 options:(curve<<16) animations:^{
         self.view.frame = frame;
     }completion:nil];
-    
-}
-
-- (CGFloat)normalViewOffset
-{
-    BOOL isHiddenStatusBar = [UIApplication sharedApplication].isStatusBarHidden;
-    BOOL isHiddenNaviBar = self.navigationController.navigationBar.hidden;
-    
-    CGFloat offset = 0;
-    if (!isHiddenStatusBar && !isHiddenNaviBar) {
-        offset += [UIApplication sharedApplication].statusBarFrame.size.height
-        + self.navigationController.navigationBar.frame.size.height;
-    }
-    return offset;
 }
 
 @end
