@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63F0006F1C3E601300A8FFAB /* ScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F0006E1C3E601300A8FFAB /* ScrollViewController.m */; };
 		63F373971C3D11CD0003F758 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F373961C3D11CD0003F758 /* main.m */; };
 		63F3739A1C3D11CD0003F758 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F373991C3D11CD0003F758 /* AppDelegate.m */; };
 		63F3739D1C3D11CD0003F758 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F3739C1C3D11CD0003F758 /* ViewController.m */; };
@@ -16,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		63F0006D1C3E601300A8FFAB /* ScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollViewController.h; sourceTree = "<group>"; };
+		63F0006E1C3E601300A8FFAB /* ScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollViewController.m; sourceTree = "<group>"; };
 		63F373921C3D11CD0003F758 /* KeyboardTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeyboardTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F373961C3D11CD0003F758 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		63F373981C3D11CD0003F758 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -62,6 +65,8 @@
 				63F373991C3D11CD0003F758 /* AppDelegate.m */,
 				63F3739B1C3D11CD0003F758 /* ViewController.h */,
 				63F3739C1C3D11CD0003F758 /* ViewController.m */,
+				63F0006D1C3E601300A8FFAB /* ScrollViewController.h */,
+				63F0006E1C3E601300A8FFAB /* ScrollViewController.m */,
 				63F3739E1C3D11CD0003F758 /* Main.storyboard */,
 				63F373A11C3D11CD0003F758 /* Assets.xcassets */,
 				63F373A31C3D11CD0003F758 /* LaunchScreen.storyboard */,
@@ -152,6 +157,7 @@
 				63F3739D1C3D11CD0003F758 /* ViewController.m in Sources */,
 				63F3739A1C3D11CD0003F758 /* AppDelegate.m in Sources */,
 				63F373971C3D11CD0003F758 /* main.m in Sources */,
+				63F0006F1C3E601300A8FFAB /* ScrollViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +268,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = KeyboardTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ShouChengT.KeyboardTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -273,6 +280,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = KeyboardTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ShouChengT.KeyboardTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -298,6 +306,7 @@
 				63F373AB1C3D11CD0003F758 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

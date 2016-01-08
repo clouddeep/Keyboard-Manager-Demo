@@ -10,6 +10,7 @@
 
 @interface ViewController : UIViewController
 
+- (void)viewMoveUp:(BOOL)isMoveUp withInfo:(NSDictionary *)userInfo;
 
 @end
 
